@@ -20,18 +20,19 @@ try {
     $base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     echo "conexion ok.";
 
+    $salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+    $contrasena = crypt('antonio', $salt);
     $query = "
 	DROP TABLE IF EXISTS usuarios;
 	CREATE TABLE usuarios(
 		id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 		usuario varchar(100) NOT NULL,
-		contrasena varchar(20) NOT NULL,
+		contrasena varchar(200) NOT NULL,
 		correo text NOT NULL,
 		rol varchar(15) NOT NULL
 	);
 	INSERT INTO usuarios (`id`, `usuario`, `contrasena`, `correo`, `rol`) VALUES
-		(1, 'antonio', 'antonio', 'ajsamu@hotmail.es', 'usuario'),
-		(2, 'antonio', 'antonio', 'ajsamu@hotmail.es', 'administrador');";
+		(1, 'antonio', '$contrasena', 'ajsamu@hotmail.es', 'administrador');";
     $base->query($query);
 
     $query = "
@@ -110,20 +111,6 @@ try {
 			10
 		);";
     $base->query($query);
-
-    // $query = "
-    // DROP TABLE IF EXISTS variedades;
-    // CREATE TABLE variedades(
-    //     id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    //     nombre tinytext NOT NULL
-    // );
-    // INSERT INTO `variedades`(`id`, `nombre`) VALUES
-    //     (1, 'portatil'),
-    //     (2, 'sobremesa'),
-    //     (3, 'movil'),
-    //     (4, 'televisor');";
-    // $base->query($query);
-
 } catch (Exception $e) {
     die('Error: ' . $e->GetMessage());
 } finally {

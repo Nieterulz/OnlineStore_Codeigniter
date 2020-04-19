@@ -7,6 +7,7 @@
 			defer
 			src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
 		></script>
+		<script src="<?php echo base_url(); ?>js/scripts.js"></script>
 		<link
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css"
@@ -28,6 +29,15 @@
 				<div class="container">
 					<div class="columns is-centered">
 						<div class="column is-5">
+						<?php
+if (isset($mensaje)) {
+    echo "
+	<div class='notification is-danger has-text-weight-bold is-size-6'>
+		<button class='delete'></button>" .
+        $mensaje .
+        "</div>";
+}
+?>
 							<p class="has-text-weight-bold is-size-4 has-text-centered has-text-dark">Iniciar Sesión </p>
 
 							<!-- Formulario -->
@@ -40,9 +50,11 @@
 							>
 								<!-- Usuario -->
 								<div class="field">
-									<label for="" class="label">Usuario</label>
+									<label for="usuario" class="label">Usuario</label>
 									<div class="control has-icons-left ">
 										<input
+											id="usuario"
+											name="usuario"
 											type="text"
 											class="input has-background-white"
 											required
@@ -54,9 +66,14 @@
 								</div>
 								<!-- Contraseña -->
 								<div class="field">
-									<label for="" class="label">Contraseña</label>
+									<label for="contrasena" class="label">Contraseña</label>
 									<div class="control has-icons-left">
-										<input type="password" class="input has-background-white" required />
+										<input
+											id="contrasena"
+											name="contrasena"
+											type="password"
+											class="input has-background-white"
+											required />
 										<span class="icon is-small is-left">
 											<i class="fa fa-lock"></i>
 										</span>

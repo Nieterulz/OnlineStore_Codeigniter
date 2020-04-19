@@ -72,9 +72,26 @@
 							<?php echo $item[0]['precio'] . "€" ?>
 						</p>
 					</div>
-					<button class="button is-success">
-						<strong> Añadir al carrito </strong>
-					</button>
+<?php
+if (isset($_SESSION['usuario'])) {
+    echo "
+	<button class='button is-success'>
+		<strong> Añadir al carrito </strong>
+	</button>";
+} else {
+    echo "
+	<button class='button is-success' disabled>
+		<strong> Añadir al carrito </strong>
+	</button>
+	<br><br>
+	<p class='has-text-weight-bold'> <a class='has-text-success'
+			href=" . base_url() . "index.php/users/login
+		>Inicie Sesión</a> para empezar a comprar
+	</p>";
+}
+?>
+
+
 				</div>
 			</div>
 		</section>

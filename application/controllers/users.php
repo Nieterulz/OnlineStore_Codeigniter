@@ -36,7 +36,7 @@ class Users extends CI_Controller
             $this->form_validation->set_rules('usuario', 'Usuario', 'required|trim|callback_verifyUser');
             $this->form_validation->set_rules('email', 'E-mail', 'required|valid_email|trim');
             $this->form_validation->set_rules('contrasena', 'Contraseña', 'required|trim');
-            $this->form_validation->set_rules('contrasenaR', 'Confirmación de contraseña', 'required|trim|matches[contrasena]');
+            $this->form_validation->set_rules('contrasenaR', 'Repetir contraseña', 'required|trim|matches[contrasena]');
             //mensaje de error de validacion
             $this->form_validation->set_message('required', 'El campo %s es obligatorio.');
             $this->form_validation->set_message('valid_email', 'El campo %s es inválido.');
@@ -59,22 +59,30 @@ class Users extends CI_Controller
 
     public function verify_sesion()
     {
+        $this->load->model("users_model");
         if ($this->input->post('submit_log')) {
             //verificar
-			$variable = $this->users_model->verifySesion();
-			
+            $exists = $this->users_model->verifySesion();
+            if (!$exists) {
+                $datos = array('mensaje' => 'Usuario y/o Contraseña inválidos');
+                $this->load->view('templates/header_view');
+                $this->load->view('login_view', $datos);
+                $this->load->view('templates/footer_view');
+            } else {
+                $userData = $this->users_model->getUser($this->input->post('usuario', true));
+                $this->session->set_userdata($userData);
+                $this->load->view('templates/header_view');
+                $this->load->view('login_view');
+                $this->load->view('templates/footer_view');
+            }
+
         }
     }
 
     public function verifyUser($usuario)
     {
         $this->load->model("users_model");
-        $variable = $this->users_model->verifyUser($usuario);
-        if ($variable == true) { //existe el usuario
-            return false; //no pasaria la validación porque el usuario ya existe
-        } else {
-            return true;
-        }
+        $existe = $this->users_model->verifyUser($usuario);
+        return !$existe;
     }
-
 }

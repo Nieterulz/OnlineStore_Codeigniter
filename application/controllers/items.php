@@ -20,4 +20,12 @@ class Items extends CI_Controller
         $data = array("items" => $items);
         $this->load->view('items_view', $data);
     }
+
+    public function close_sesion()
+    {
+        session_unset();
+        $this->load->view('templates/header_view');
+        $this->showItems();
+        $this->load->view('templates/footer_view');
+    }
 }

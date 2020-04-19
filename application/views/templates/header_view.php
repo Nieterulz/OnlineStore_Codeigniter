@@ -76,26 +76,76 @@
 					</div>
 
 					<div class="navbar-end">
-						<div class="navbar-item">
-							<a href="<?=base_url()?>index.php/shoppingCart/">
-								<icon
-									class="fa fa-shopping-cart icon has-text-light is-size-4"
-								></icon>
-							</a>
-						</div>
+<?php
+if (isset($_SESSION['usuario'])) {
+    echo "<div class='navbar-item'>
+	<a href=" . base_url() . "index.php/shoppingCart/>
+		<icon
+			class='fa fa-shopping-cart icon has-text-light is-size-4'
+		></icon>
+	</a>
+	</div>";
+}
+?>
 						<div class="navbar-item">
 							<div class="buttons">
-								<a
-									href="<?=base_url() . 'index.php/users/register/'?>"
-									class="button is-success">
-									<strong>Registrar</strong>
-								</a>
-								<a
-									href="<?=base_url()?>index.php/users/login/"
-									class="button is-light has-text-weight-bold"
-								>
-									Iniciar Sesión
-								</a>
+
+<?php
+if (!isset($_SESSION['usuario'])) {
+    echo "<a
+		href=" . base_url() . "index.php/users/register/
+		class='button is-success'
+	>
+		<strong>Registrar</strong>
+	</a>";
+}
+
+if (!isset($_SESSION['usuario'])) {
+    echo "<a
+		href=" . base_url() . "index.php/users/login/
+		class='button is-light has-text-weight-bold'
+	>
+		Iniciar Sesión
+	</a>";
+}
+
+if (isset($_SESSION['usuario'])) {
+    echo "
+	<div class='dropdown is-hoverable is-right has-text-centered'>
+		<div class='dropdown-trigger'>
+			<a
+				href='#'
+				class='button is-success has-text-weight-bold has-icon-right has-text-dark'
+				aria-controls='dropdown-menu'
+			>" .
+    $_SESSION['usuario'] . "<hr><hr>" .
+    "<icon
+					class='fa fa-user icon is-small has-text-dark'
+				></icon>
+			</a>
+		</div>
+		<div class='dropdown-menu' id='dropdown-menu' role='menu'>
+			<div class='dropdown-content'>
+				<div class='dropdown-item'>
+					<a class='has-text-weight-bold has-text-dark'>Configuración</a>
+					<icon class='fa fa-cog icon is-small has-text-dark'
+					></icon>
+				</div>
+				<hr class='dropdown-divider'>
+				<div class='dropdown-item has-icon-right'>
+					<a
+						href=" . base_url() . "index.php/items/close_sesion/
+						class='has-text-weight-bold has-text-dark'>Cerrar sesión</a>
+					<icon class='fa fa-sign-out-alt icon is-small has-text-dark'
+					></icon>
+				</div>
+			</div>
+		</div>
+	</div>
+	";
+}
+?>
+
 							</div>
 						</div>
 					</div>
