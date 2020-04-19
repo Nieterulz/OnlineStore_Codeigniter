@@ -127,8 +127,11 @@ if (isset($_SESSION['usuario'])) {
 		<div class='dropdown-menu' id='dropdown-menu' role='menu'>
 			<div class='dropdown-content'>
 				<div class='dropdown-item'>
-					<a class='has-text-weight-bold has-text-dark'>Configuración</a>
-					<icon class='fa fa-cog icon is-small has-text-dark'
+					<a
+						href=" . base_url() . "index.php/users/config/
+						class='has-text-weight-bold has-text-dark'
+					>Configuración</a>
+						<icon class='fa fa-cog icon is-small has-text-dark'
 					></icon>
 				</div>
 				<hr class='dropdown-divider'>

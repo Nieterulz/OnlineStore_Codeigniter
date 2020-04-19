@@ -85,4 +85,25 @@ class Users extends CI_Controller
         $existe = $this->users_model->verifyUser($usuario);
         return !$existe;
     }
+
+    public function config()
+    {
+        $this->load->view('templates/header_view');
+        $this->load->view('conf_view');
+        $this->load->view('templates/footer_view');
+    }
+
+    public function changeUser()
+    {
+        $this->load->model("users_model");
+        $existe = $this->uses_model->verifyUser($this->input->post('usuario', true));
+        if (!$existe) {
+            $this->users_model->changeUser($this->input->post('usuario', true));
+        } else {
+            $this->load->view('templates/header_view');
+            $this->load->view('conf_view');
+            $this->load->view('templates/footer_view');
+        }
+    }
+
 }
