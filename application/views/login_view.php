@@ -31,7 +31,13 @@
 							<p class="has-text-weight-bold is-size-4 has-text-centered has-text-dark">Iniciar Sesión </p>
 
 							<!-- Formulario -->
-							<form action="" class="box has-background-white">
+							<form
+								id="form_log"
+								name="form_log"
+								action="<?php echo base_url() ?>index.php/users/verify_sesion/"
+								method="post"
+								class="box"
+							>
 								<!-- Usuario -->
 								<div class="field">
 									<label for="" class="label">Usuario</label>
@@ -58,9 +64,11 @@
 								</div>
 								<!-- Botón -->
 								<div class="field">
-									<button class="button is-success has-text-weight-bold">
-										Iniciar Sesión
-									</button>
+									<input
+										type="submit"
+										name="submit_log"
+										class="button is-success has-text-weight-bold" value="Iniciar Sesión"
+									>
 								</div>
 							</form>
 						</div>

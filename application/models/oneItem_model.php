@@ -10,7 +10,7 @@ class OneItem_model extends CI_Model
     // Devuelve todos los productos de la base de datos
     public function getItem($id)
     {
-        $str = "SELECT * FROM productos WHERE `id`=$id;";
+        $str = "SELECT * FROM productos WHERE `id`=$id AND stock>=1;";
         $query = $this->db->query($str);
         return $query->result_array();
     }

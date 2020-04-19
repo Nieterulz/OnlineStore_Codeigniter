@@ -86,12 +86,12 @@
 						<div class="navbar-item">
 							<div class="buttons">
 								<a
-									href="<?=base_url() . 'index.php/register/'?>"
+									href="<?=base_url() . 'index.php/users/register/'?>"
 									class="button is-success">
 									<strong>Registrar</strong>
 								</a>
 								<a
-									href="<?=base_url()?>index.php/login/"
+									href="<?=base_url()?>index.php/users/login/"
 									class="button is-light has-text-weight-bold"
 								>
 									Iniciar Sesión

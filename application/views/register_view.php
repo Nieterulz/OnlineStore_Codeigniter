@@ -8,6 +8,7 @@
 			defer
 			src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
 		></script>
+		<script src="<?php echo base_url(); ?>js/scripts.js"></script>
 		<link
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css"
@@ -29,15 +30,38 @@
 				<div class="container">
 					<div class="columns is-centered">
 						<div class="column is-5">
+						<?php
+if (!empty(validation_errors())) {
+    echo "<div class='notification is-danger has-text-weight-bold is-size-6'>
+		<button class='delete'></button>" .
+    validation_errors() .
+        "</div>";
+}
+?>
+						<?php
+if (isset($mensaje)) {
+    echo "
+	<div class='notification is-success has-text-weight-bold is-size-6'>
+		<button class='delete'></button>" .
+        $mensaje .
+        "</div>";
+}
+?>
 							<p class="has-text-weight-bold is-size-4 has-text-centered has-text-dark">Registrarse</p>
-							<!-- Formulario -->
-							<form action="<?base_url() . '/index.php/register/validar/'?>" class="box">
+							<form
+								id="form_reg"
+								name="form_reg"
+								action="<?php echo base_url() ?>index.php/users/verify_registro/"
+								method="post"
+								class="box"
+							>
 								<!-- Usuario -->
 								<div class="field">
 									<label for="" class="label">Usuario</label>
 									<div class="control has-icons-left">
 										<input
 											id="usuario"
+											name="usuario"
 											type="text"
 											class="input has-background-white"
 											required
@@ -53,6 +77,7 @@
 									<div class="control has-icons-left">
 										<input
 											id="email"
+											name="email"
 											type="email"
 											class="input has-background-white"
 											required
@@ -66,7 +91,7 @@
 								<div class="field">
 									<label for="" class="label">Contraseña</label>
 									<div class="control has-icons-left">
-										<input id="contrasena" type="password" class="input has-background-white" required />
+										<input id="contrasena" name="contrasena" type="password" class="input has-background-white" required />
 										<span class="icon is-small is-left">
 											<i class="fa fa-lock"></i>
 										</span>
@@ -76,7 +101,7 @@
 								<div class="field">
 									<label for="" class="label">Repetir contraseña</label>
 									<div class="control has-icons-left">
-										<input id="contrasenaR" type="password" class="input has-background-white" required />
+										<input id="contrasenaR" name="contrasenaR" type="password" class="input has-background-white" required />
 										<span class="icon is-small is-left">
 											<i class="fa fa-lock"></i>
 										</span>
@@ -84,9 +109,11 @@
 								</div>
 								<!-- Botón -->
 								<div class="field">
-									<button class="button is-success">
-										<strong>Registrarse</strong>
-									</button>
+									<input
+										type="submit"
+										name="submit_reg"
+										class="button is-success has-text-weight-bold" value="Registrarse"
+									>
 								</div>
 							</form>
 						</div>
