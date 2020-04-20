@@ -60,4 +60,11 @@ class ShoppingCart_model extends CI_Model
         $str = "UPDATE carritos SET `vendido`=TRUE WHERE id=$idCarrito;";
         $query = $this->db->query($str);
     }
+
+    public function deleteItem($idItem)
+    {
+        $idCarrito = $this->getId($_SESSION['id']);
+        $str = "DELETE FROM `pedidos` WHERE (id_carrito=$idCarrito AND id_producto=$idItem)";
+        $query = $this->db->query($str);
+    }
 }

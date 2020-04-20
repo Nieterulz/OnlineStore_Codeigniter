@@ -55,24 +55,30 @@
 						<a
 							href="<?=base_url()?>"
 							class="navbar-item has-text-white has-background-dark">
-							<strong>Inicio</strong>
+							<strong>Portátiles</strong>
+						</a>
+
+						<a
+							href="<?=base_url()?>"
+							class="navbar-item has-text-white has-background-dark">
+							<strong>Sobremesas</strong>
+						</a>
+
+						<a
+							href="<?=base_url()?>"
+							class="navbar-item has-text-white has-background-dark">
+							<strong>Móviles</strong>
+						</a>
+
+						<a
+							href="<?=base_url()?>"
+							class="navbar-item has-text-white has-background-dark">
+							<strong>Televisores</strong>
 						</a>
 
 						<div class="navbar-item"></div>
 						<div class="navbar-item"></div>
 						<div class="navbar-item"></div>
-						<div class="navbar-item"></div>
-						<div class="navbar-item"></div>
-						<div class="navbar-item"></div>
-						<div class="navbar-item"></div>
-
-						<input
-							id="search"
-							class="navbar-item input is-rounded"
-							type="text"
-							style="margin-top: 7px;"
-							placeholder="Buscar ..."
-						/>
 					</div>
 
 					<div class="navbar-end">

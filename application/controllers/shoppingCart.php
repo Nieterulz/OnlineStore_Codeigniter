@@ -17,15 +17,20 @@ class ShoppingCart extends CI_Controller
         $this->load->view('templates/footer_view');
     }
 
+    public function deleteItem($idItem)
+    {
+        $this->load->model('shoppingCart_model');
+        $idCarrito = $this->shoppingCart_model->deleteItem($idItem);
+        $this->index(); 
+    }
+
     public function realizarPedido()
     {
         $this->load->model('shoppingCart_model');
         $idCarrito = $this->shoppingCart_model->getId($_SESSION['id']);
         if (isset($idCarrito)) {
             $this->shoppingCart_model->buy($idCarrito);
-            $this->index();
-        } else {
-            $this->index();
         }
+        $this->index();
     }
 }
