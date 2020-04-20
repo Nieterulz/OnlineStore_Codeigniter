@@ -34,13 +34,15 @@ class Users extends CI_Controller
             //trim = limpia los espacios en blanco
             //callback_ = para llamar un método
             $this->form_validation->set_rules('usuario', 'Usuario', 'required|trim|callback_verifyUser');
-            $this->form_validation->set_rules('email', 'E-mail', 'required|valid_email|trim');
-            $this->form_validation->set_rules('contrasena', 'Contraseña', 'required|trim');
+            $this->form_validation->set_rules('email', 'E-mail', 'required|valid_email|trim|callback_verifyEmail');
+            $this->form_validation->set_rules('contrasena', 'Contraseña', 'required|trim|min_length[6]');
             $this->form_validation->set_rules('contrasenaR', 'Repetir contraseña', 'required|trim|matches[contrasena]');
             //mensaje de error de validacion
             $this->form_validation->set_message('required', 'El campo %s es obligatorio.');
             $this->form_validation->set_message('valid_email', 'El campo %s es inválido.');
             $this->form_validation->set_message('verifyUser', 'El %s ya existe.');
+            $this->form_validation->set_message('verifyEmail', 'El %s ya está siendo utilizado.');
+            $this->form_validation->set_message('min_length', 'La %s debe tener al menos 6 dígitos.');
             $this->form_validation->set_message('matches', 'El campo %s no es igual que el campo %s.');
 
             if ($this->form_validation->run() == false) {
@@ -86,6 +88,13 @@ class Users extends CI_Controller
         return !$existe;
     }
 
+    public function verifyEmail($email)
+    {
+        $this->load->model("users_model");
+        $existe = $this->users_model->verifyEmail($email);
+        return !$existe;
+    }
+
     public function config()
     {
         $this->load->view('templates/header_view');
@@ -96,13 +105,60 @@ class Users extends CI_Controller
     public function changeUser()
     {
         $this->load->model("users_model");
-        $existe = $this->uses_model->verifyUser($this->input->post('usuario', true));
-        if (!$existe) {
-            $this->users_model->changeUser($this->input->post('usuario', true));
-        } else {
-            $this->load->view('templates/header_view');
-            $this->load->view('conf_view');
-            $this->load->view('templates/footer_view');
+        if ($this->input->post('submit_user')) {
+            $this->form_validation->set_rules('usuario', 'Usuario', 'required|trim|callback_verifyUser');
+            $this->form_validation->set_message('verifyUser', 'El %s ya existe.');
+            if ($this->form_validation->run() == false) {
+                $this->load->view('templates/header_view');
+                $this->load->view('conf_view');
+                $this->load->view('templates/footer_view');
+            } else {
+                $this->users_model->changeUser($this->input->post('usuario', true));
+                $datos = array('mensaje' => 'Usuario modificado correctamente');
+                $this->load->view('templates/header_view');
+                $this->load->view('conf_view', $datos);
+                $this->load->view('templates/footer_view');
+            }
+        }
+    }
+
+    public function changeEmail()
+    {
+        $this->load->model("users_model");
+        if ($this->input->post('submit_email')) {
+            $this->form_validation->set_rules('email', 'E-mail', 'required|trim|callback_verifyEmail');
+            $this->form_validation->set_message('verifyEmail', 'El %s ya existe.');
+            if ($this->form_validation->run() == false) {
+                $this->load->view('templates/header_view');
+                $this->load->view('conf_view');
+                $this->load->view('templates/footer_view');
+            } else {
+                $this->users_model->changeEmail($this->input->post('email', true));
+                $datos = array('mensaje' => 'E-mail modificado correctamente');
+                $this->load->view('templates/header_view');
+                $this->load->view('conf_view', $datos);
+                $this->load->view('templates/footer_view');
+            }
+        }
+    }
+
+    public function changePasswd()
+    {
+        $this->load->model("users_model");
+        if ($this->input->post('submit_passwd')) {
+            $this->form_validation->set_rules('passwd', 'Contraseña', 'required|trim|min_length[6]');
+            $this->form_validation->set_message('min_length', 'La %s debe tener al menos 6 dígitos.');
+            if ($this->form_validation->run() == false) {
+                $this->load->view('templates/header_view');
+                $this->load->view('conf_view');
+                $this->load->view('templates/footer_view');
+            } else {
+                $this->users_model->changePasswd($this->input->post('passwd', true));
+                $datos = array('mensaje' => 'Contraseña modificada correctamente');
+                $this->load->view('templates/header_view');
+                $this->load->view('conf_view', $datos);
+                $this->load->view('templates/footer_view');
+            }
         }
     }
 

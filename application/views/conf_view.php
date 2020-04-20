@@ -7,6 +7,7 @@
 			defer
 			src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
 		></script>
+		<script src="<?php echo base_url(); ?>js/scripts.js"></script>
 		<link
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css"
@@ -27,6 +28,24 @@
 				<div class="container">
 					<div class="columns is-centered">
 						<div class="column is-5">
+
+<?php
+if (!empty(validation_errors())) {
+    echo "<div class='notification is-danger has-text-weight-bold is-size-6'>
+								<button class='delete'></button>" .
+    validation_errors() .
+        "</div>";
+}
+?>
+<?php
+if (isset($mensaje)) {
+    echo "
+		<div class='notification is-success has-text-weight-bold is-size-6'>
+			<button class='delete'></button>" .
+        $mensaje .
+        "</div>";
+}
+?>
 							<p
 								class="has-text-weight-bold is-size-4 has-text-centered has-text-dark"
 							>
@@ -59,9 +78,9 @@
 									<div class="control">
 										<input
 											type="submit"
+											name="submit_user"
 											class="button is-success">
-											<icon class="icon fa fa-check-circle"></icon>
-										</a>
+										</input>
 									</div>
 								</div>
 							</form>
@@ -69,7 +88,7 @@
 							<form
 								id="form_email"
 								name="form_email"
-								action=""
+								action="<?php echo base_url() ?>index.php/users/changeEmail"
 								method="post"
 								class="box"
 							>
@@ -89,26 +108,28 @@
 										</span>
 									</div>
 									<div class="control">
-										<a class="button is-success">
-											<icon class="icon fa fa-check-circle"></icon>
-										</a>
+										<input
+											type="submit"
+											name="submit_email"
+											class="button is-success">
+										</input>
 									</div>
 								</div>
 							</form>
 							<form
 								id="form_passwd"
 								name="form_passwd"
-								action=""
+								action="<?php echo base_url() ?>index.php/users/changePasswd"
 								method="post"
 								class="box"
 							>
 								<!-- Contraseña -->
-								<label for="contrasena" class="label">Nueva Contraseña</label>
+								<label for="passwd" class="label">Nueva Contraseña</label>
 								<div class="field has-addons">
 									<div class="control has-icons-left is-expanded">
 										<input
-											id="contrasena"
-											name="contrasena"
+											id="passwd"
+											name="passwd"
 											type="password"
 											class="input has-background-white"
 										/>
@@ -117,9 +138,11 @@
 										</span>
 									</div>
 									<div class="control">
-										<a class="button is-success">
-											<icon class="icon fa fa-check-circle"></icon>
-										</a>
+										<input
+											type="submit"
+											name="submit_passwd"
+											class="button is-success">
+										</input>
 									</div>
 								</div>
 							</form>

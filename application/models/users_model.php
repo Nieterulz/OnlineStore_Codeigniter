@@ -26,6 +26,13 @@ class Users_model extends CI_Model
         return !(mysql_numrows($consulta) == 0);
     }
 
+    public function verifyEmail($email)
+    {
+        $str = "SELECT * FROM usuarios WHERE correo='" . $email . "'";
+        $consulta = mysql_query($str);
+        return !(mysql_numrows($consulta) == 0);
+    }
+
     public function addUser()
     {
         // Encriptamos contraseña
@@ -45,6 +52,29 @@ class Users_model extends CI_Model
     {
         $query = $this->db->query("SELECT * FROM usuarios WHERE usuario='$user' LIMIT 1");
         return $query->result_array()[0];
+    }
+
+    public function changeUser($username)
+    {
+        $str = "UPDATE usuarios SET `usuario`='$username' WHERE id=" . $_SESSION['id'] . ";";
+        $query = $this->db->query($str);
+        $_SESSION['usuario'] = $username;
+    }
+
+    public function changeEmail($email)
+    {
+        $str = "UPDATE usuarios SET `correo`='$email' WHERE id=" . $_SESSION['id'] . ";";
+        $query = $this->db->query($str);
+        $_SESSION['correo'] = $email;
+    }
+
+    public function changePasswd($passwd)
+    {
+        $salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+        $passwd = crypt($passwd, $salt);
+        $str = "UPDATE usuarios SET `contrasena`='$passwd' WHERE id=" . $_SESSION['id'] . ";";
+        $query = $this->db->query($str);
+        $_SESSION['contrasena'] = $passwd;
     }
 
 }

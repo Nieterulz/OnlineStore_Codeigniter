@@ -32,7 +32,7 @@ try {
 		rol varchar(15) NOT NULL
 	);
 	INSERT INTO usuarios (`id`, `usuario`, `contrasena`, `correo`, `rol`) VALUES
-		(1, 'antonio', '$contrasena', 'ajsamu@hotmail.es', 'administrador');";
+		(1, 'antonio', '$contrasena', 'ajsamu@hotmail.com', 'administrador');";
     $base->query($query);
 
     $query = "
