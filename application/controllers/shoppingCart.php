@@ -7,13 +7,25 @@ class ShoppingCart extends CI_Controller
         parent::_construct();
     }
 
-    public function index($id)
+    public function index()
     {
         $this->load->view('templates/header_view');
         $this->load->model('shoppingCart_model');
-        $items = $this->shoppingCart_model->getItems($id);
+        $items = $this->shoppingCart_model->getItems();
         $data = array("items" => $items);
         $this->load->view('shoppingCart_view', $data);
         $this->load->view('templates/footer_view');
+    }
+
+    public function realizarPedido()
+    {
+        $this->load->model('shoppingCart_model');
+        $idCarrito = $this->shoppingCart_model->getId($_SESSION['id']);
+        if (isset($idCarrito)) {
+            $this->shoppingCart_model->buy($idCarrito);
+            $this->index();
+        } else {
+            $this->index();
+        }
     }
 }

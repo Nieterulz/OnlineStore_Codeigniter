@@ -43,20 +43,36 @@
 					</p>
 				</article>
 				<div class="column is-1"></div>
-				<div
+				<form
+					id="form_cart"
+					name="form_cart"
+					method="post"
+					action="<?php echo base_url() ?>index.php/oneItem/addItem/<?php echo $item[0]['id'] ?>"
 					class="column is-5 has-text-centered"
 					style="margin-top: 100px; margin-bottom: 100px;"
 				>
+					<?php
+if (!empty($mensaje)) {
+    echo "
+		<div class='notification is-success has-text-weight-bold is-size-6'>
+			<button class='delete'></button>" .
+        $mensaje .
+        "</div>";
+}
+?>
+					<br>
 					<p class="is-size-5 has-text-weight-bold has-text-centered">
 						<?php echo $item[0]['descripcion'] ?>
 					</p>
 					<br /><br />
 					<div class="columns is-centered">
 						<div class="field column is-3">
+
 							<label for="quantity" class="is-size-5 has-text-weight-bold has-text-centered">Cantidad</label>
 							<input
 								type="number"
 								id="quantity"
+								name="quantity"
 								min="1"
 								max="10"
 								value="1"
@@ -75,14 +91,24 @@
 <?php
 if (isset($_SESSION['usuario'])) {
     echo "
-	<button class='button is-success'>
-		<strong> Añadir al carrito </strong>
-	</button>";
+	<input
+		id='submit_cart'
+		name='submit_cart'
+		type='submit'
+		class='button is-success has-text-weight-bold'
+		value='Añadir al carrito'
+	>
+	</input>";
 } else {
     echo "
-	<button class='button is-success' disabled>
-		<strong> Añadir al carrito </strong>
-	</button>
+	<input
+		id='addItem'
+		name='addItem'
+		type='submit'
+		class='button is-success has-text-weight-bold'
+		value='Añadir al carrito'
+	>
+	</input>
 	<br><br>
 	<p class='has-text-weight-bold'> <a class='has-text-success'
 			href=" . base_url() . "index.php/users/login
@@ -92,7 +118,7 @@ if (isset($_SESSION['usuario'])) {
 ?>
 
 
-				</div>
+				</form>
 			</div>
 		</section>
 	</body>

@@ -40,10 +40,11 @@ try {
 	CREATE TABLE carritos(
 		id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 		id_usuario int NOT NULL,
+		vendido BOOLEAN NOT NULL,
 		FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
 	);
-	INSERT INTO `carritos` (`id`, `id_usuario`) VALUES
-		(1, 1);";
+	INSERT INTO `carritos` (`id`, `id_usuario`, `vendido`) VALUES
+		(1, 1, false);";
     $base->query($query);
 
     $query = "

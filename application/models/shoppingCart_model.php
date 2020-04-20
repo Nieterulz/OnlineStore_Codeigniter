@@ -7,22 +7,57 @@ class ShoppingCart_model extends CI_Model
         parent::__construct();
     }
 
-    // Devuelve todos los productos de la base de datos
-    public function getItems($id)
+    public function getItems()
     {
-        $str = "SELECT id FROM carritos WHERE `id_usuario`=$id;";
+        $str = "SELECT id FROM carritos WHERE `id_usuario`= " . $_SESSION['id'] . "  AND vendido IS FALSE;";
         $query = $this->db->query($str);
-        $idCarrito = $query->result()->id;
+        if (!empty($query->result()[0])) {
+            $idCarrito = $query->row()->id;
 
-        $str = "SELECT id_producto, nombre, imagen, precio, cantidad
-			FROM pedidos
-			INNER JOIN productos
-			ON (pedidos.id_producto = productos.id AND id_carrito=$idCarrito;";
-        $query = $this->db->query($str);
-        $data = $query->result();
-
-        print_r($data);
-        // return $query->result_array();
+            $str = "SELECT `id_producto`, `nombre`, `imagen`, `precio`, `cantidad`, `variedad`
+                FROM `pedidos`
+                INNER JOIN `productos`
+                ON (`pedidos`.id_producto = `productos`.id AND `id_carrito`=$idCarrito);";
+            $query = $this->db->query($str);
+            $data = $query->result();
+        } else {
+            $data = "";
+        }
+        return $data;
     }
 
+    public function getShoppingCartId($id)
+    {
+        $str = "SELECT `id` FROM carritos WHERE id_usuario='" . $id . "' AND vendido IS FALSE";
+        $query = $this->db->query($str)->result();
+        if (!empty($query[0])) {
+            return $query[0]->id;
+        } else {
+            $this->createShoppingCart($id);
+            $str = "SELECT `id` FROM carritos WHERE id_usuario='" . $id . "' AND vendido IS FALSE";
+            $query = $this->db->query($str)->result();
+            return $query[0]->id;
+        }
+    }
+
+    public function getId($id)
+    {
+        $str = "SELECT `id` FROM carritos WHERE id_usuario='" . $id . "' AND vendido IS FALSE";
+        $query = $this->db->query($str)->result();
+        if (!empty($query)) {
+            return $query[0]->id;
+        }
+    }
+
+    public function createShoppingCart($id)
+    {
+        $str = "INSERT INTO `carritos` VALUES (NUll, $id, FALSE)";
+        $query = $this->db->query($str);
+    }
+
+    public function buy($idCarrito)
+    {
+        $str = "UPDATE carritos SET `vendido`=TRUE WHERE id=$idCarrito;";
+        $query = $this->db->query($str);
+    }
 }
