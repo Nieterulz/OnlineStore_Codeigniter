@@ -57,6 +57,11 @@ class ShoppingCart_model extends CI_Model
 
     public function buy($idCarrito)
     {
+        $str = "UPDATE productos
+            INNER JOIN `pedidos` ON (`id_carrito`=$idCarrito AND `pedidos`.id_producto = `productos`.id)
+            SET productos.stock=stock-pedidos.cantidad WHERE pedidos.id=$idCarrito;";
+        $query = $this->db->query($str);
+
         $str = "UPDATE carritos SET `vendido`=TRUE WHERE id=$idCarrito;";
         $query = $this->db->query($str);
     }

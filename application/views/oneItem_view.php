@@ -106,6 +106,7 @@ if (isset($_SESSION['usuario'])) {
 		name='addItem'
 		type='submit'
 		class='button is-success has-text-weight-bold'
+		disabled
 		value='Añadir al carrito'
 	>
 	</input>

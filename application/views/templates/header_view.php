@@ -53,25 +53,25 @@
 				<div id="navbarBasicExample" class="navbar-menu">
 					<div class="navbar-start">
 						<a
-							href="<?=base_url()?>"
+							href="<?php echo base_url() ?>index.php/items/portatiles"
 							class="navbar-item has-text-white has-background-dark">
 							<strong>Portátiles</strong>
 						</a>
 
 						<a
-							href="<?=base_url()?>"
+							href="<?php echo base_url() ?>index.php/items/sobremesas"
 							class="navbar-item has-text-white has-background-dark">
 							<strong>Sobremesas</strong>
 						</a>
 
 						<a
-							href="<?=base_url()?>"
+							href="<?php echo base_url() ?>index.php/items/moviles"
 							class="navbar-item has-text-white has-background-dark">
 							<strong>Móviles</strong>
 						</a>
 
 						<a
-							href="<?=base_url()?>"
+							href="<?php echo base_url() ?>index.php/items/televisores"
 							class="navbar-item has-text-white has-background-dark">
 							<strong>Televisores</strong>
 						</a>
