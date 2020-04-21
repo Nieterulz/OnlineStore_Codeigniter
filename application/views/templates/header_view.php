@@ -132,22 +132,35 @@ if (isset($_SESSION['usuario'])) {
 		</div>
 		<div class='dropdown-menu' id='dropdown-menu' role='menu'>
 			<div class='dropdown-content'>
-				<div class='dropdown-item'>
+				<div class='dropdown-item has-icon-right'>
 					<a
 						href=" . base_url() . "index.php/users/config/
 						class='has-text-weight-bold has-text-dark'
 					>Configuración</a>
 						<icon class='fa fa-cog icon is-small has-text-dark'
 					></icon>
-				</div>
-				<hr class='dropdown-divider'>
+				</div>";
+				if(strcmp($_SESSION['rol'], 'administrador')==0)
+				{
+					echo "
+					<hr class='dropdown-divider'>
+					<div class='dropdown-item has-icon-right'>
+					<a
+						href=" . base_url() . "index.php/users/admin/
+						class='has-text-weight-bold has-text-dark'>Administrador</a>
+					<icon class='fa fa-user-shield icon is-small has-text-dark'
+					></icon>
+				</div>";
+				}
+
+			echo "<hr class='dropdown-divider'>
 				<div class='dropdown-item has-icon-right'>
 					<a
 						href=" . base_url() . "index.php/items/close_sesion/
 						class='has-text-weight-bold has-text-dark'>Cerrar sesión</a>
 					<icon class='fa fa-sign-out-alt icon is-small has-text-dark'
 					></icon>
-				</div>
+				</div>		
 			</div>
 		</div>
 	</div>

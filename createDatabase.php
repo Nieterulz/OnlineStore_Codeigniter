@@ -21,7 +21,6 @@ try {
     echo "conexion ok.";
 
     $salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
-    $contrasena = crypt('antonio', $salt);
     $query = "
 	DROP TABLE IF EXISTS usuarios;
 	CREATE TABLE usuarios(
@@ -32,7 +31,8 @@ try {
 		rol varchar(15) NOT NULL
 	);
 	INSERT INTO usuarios (`id`, `usuario`, `contrasena`, `correo`, `rol`) VALUES
-		(1, 'antonio', '$contrasena', 'ajsamu@hotmail.com', 'administrador');";
+		(1, 'antonio', '" . crypt('antonio', $salt) . "', 'ajsamu@hotmail.com', 'administrador'),
+		(2, 'alvaro','" . crypt('alvaro', $salt) . "', 'ajsamu@hotmail.com', 'usuario');";
     $base->query($query);
 
     $query = "

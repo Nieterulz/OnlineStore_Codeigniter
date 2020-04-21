@@ -162,4 +162,35 @@ class Users extends CI_Controller
         }
     }
 
+    public function admin()
+    {
+        $this->load->view('templates/header_view');
+        $this->load->view('admin_view');
+        $this->load->view('templates/footer_view');
+    }
+
+    public function addItem()
+    {
+        $this->load->model("users_model");
+        if ($this->input->post('submit_admin')) {
+            $this->form_validation->set_rules('nombre', 'Nombre', 'required');
+            $this->form_validation->set_rules('descripcion', 'Descripción', 'required');
+            $this->form_validation->set_rules('stock', 'Stock', 'required|greater_than[0]');
+            $this->form_validation->set_rules('precio', 'Precio', 'required|greater_than[0]');
+
+            $this->form_validation->set_message('greater_than', '%s debe ser mayor que 0');
+            if ($this->form_validation->run() == false) {
+                echo "HOLA";
+                $this->load->view('templates/header_view');
+                $this->load->view('admin_view');
+                $this->load->view('templates/footer_view');
+            } else {
+                $this->users_model->addItem();
+                $datos = array('mensaje' => 'Producto registrado correctamente');
+                $this->load->view('templates/header_view');
+                $this->load->view('admin_view', $datos);
+                $this->load->view('templates/footer_view');
+            }
+        }
+    }
 }

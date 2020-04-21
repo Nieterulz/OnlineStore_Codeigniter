@@ -77,4 +77,17 @@ class Users_model extends CI_Model
         $_SESSION['contrasena'] = $passwd;
     }
 
+    public function addItem()
+    {
+        $this->db->insert('productos', array(
+            //el true es para que limpie este campo de inyecciones xss
+            'nombre' => $this->input->post('nombre', true),
+            'descripcion' => $this->input->post('descripcion', true),
+            'precio' => $this->input->post('precio', true),
+            'imagen' => $this->input->post('imagen', true),
+            'stock' => $this->input->post('stock', true),
+            'variedad' => $this->input->post('variedad', true),
+        ));
+    }
+
 }

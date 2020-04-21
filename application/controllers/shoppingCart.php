@@ -21,7 +21,7 @@ class ShoppingCart extends CI_Controller
     {
         $this->load->model('shoppingCart_model');
         $idCarrito = $this->shoppingCart_model->deleteItem($idItem);
-        $this->postCompra();
+        $this->index();
     }
 
     public function realizarPedido()
@@ -30,16 +30,16 @@ class ShoppingCart extends CI_Controller
         $idCarrito = $this->shoppingCart_model->getId($_SESSION['id']);
         if (isset($idCarrito)) {
             $this->shoppingCart_model->buy($idCarrito);
+            $this->postCompra();
+        } else {
+            $this->index();
         }
-        $this->index();
     }
 
     private function postCompra()
     {
         $this->load->view('templates/header_view');
-        $this->load->model('shoppingCart_model');
-        $items = $this->shoppingCart_model->getItems();
-        $data = array("mensaje" => "Pedido realizado correctamente");
+        $data = array("items" => "", "mensaje" => "Pedido realizado correctamente");
         $this->load->view('shoppingCart_view', $data);
         $this->load->view('templates/footer_view');
     }
